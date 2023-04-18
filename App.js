@@ -11,6 +11,7 @@ import RegisterScreen from './screens/auth/registerScreen';
 import VerificationScreen from './screens/auth/verificationScreen';
 import BottomTabBarScreen from './components/bottomTabBarScreen';
 import QuizCategoriesScreen from './screens/quizCategories/quizCategoriesScreen';
+import CategoryDifficultyScreen from './screens/quizCategories/categoriesDifficultyScreen';
 import JoinQuizScreen from './screens/joinQuiz/joinQuizScreen';
 import JoinQuizDetailScreen from './screens/joinQuizDetail/joinQuizDetailScreen';
 import QuizScreen from './screens/quiz/quizScreen';
@@ -52,6 +53,7 @@ function MyApp() {
         <Stack.Screen name="Verification" component={VerificationScreen} />
         <Stack.Screen name="BottomTabBar" component={BottomTabBarScreen} options={{ ...TransitionPresets.DefaultTransition }} />
         <Stack.Screen name="QuizCategories" component={QuizCategoriesScreen} />
+        <Stack.Screen name="CategoriesDifficulty" component={CategoryDifficultyScreen} />
         <Stack.Screen name="JoinQuiz" component={JoinQuizScreen} />
         <Stack.Screen name="JoinQuizDetail" component={JoinQuizDetailScreen} />
         <Stack.Screen name="Quiz" component={QuizScreen} />

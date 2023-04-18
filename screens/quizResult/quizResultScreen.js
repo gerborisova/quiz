@@ -45,14 +45,6 @@ const QuizResultScreen = ({ navigation }) => {
                     source={require('../../assets/images/goodJob.png')}
                     style={{ width: '100%', height: 50.0, resizeMode: 'contain' }}
                 />
-                <View style={{ alignItems: 'center', margin: Sizes.fixPadding * 2.0 }}>
-                    <Text style={{ ...Fonts.blackColor16Bold }}>
-                        Your Score
-                    </Text>
-                    <Text style={{ ...Fonts.blackColor48bebas }}>
-                        130
-                    </Text>
-                </View>
                 <View style={{ marginHorizontal: Sizes.fixPadding * 2.0, flexDirection: 'row', alignItems: 'center' }}>
                     <View style={{ ...styles.scroreBoxStyle, backgroundColor: Colors.grayColor }}>
                         <Text style={{ ...Fonts.whiteColor22ExtraBold }}>
@@ -87,8 +79,8 @@ const QuizResultScreen = ({ navigation }) => {
     function leaderBoardButton() {
         return (
             <Button
-                btnText={'Leaderboard'}
-                onPress={() => { navigation.navigate('Leaderboard') }}
+                btnText={'More Quizes'}
+                onPress={() => { navigation.navigate('QuizCategories') }}
                 styles={{ marginTop: Sizes.fixPadding * 5.0, marginBottom: Sizes.fixPadding * 3.0 }}
             />
         )
@@ -101,7 +93,7 @@ const QuizResultScreen = ({ navigation }) => {
                 size={24}
                 color={Colors.whiteColor}
                 style={{ position: 'absolute', top: 20.0, left: 20.0, zIndex: 1 }}
-                onPress={() => { navigation.navigate('Home') }}
+                onPress={() => { navigation.navigate('Quiz') }}
             />
         )
     }

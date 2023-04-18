@@ -3,6 +3,7 @@ import React from 'react'
 import { Colors, Fonts, Sizes } from '../../constants/styles'
 import Header from '../../components/header'
 
+
 const quizCategoriesList = [
     {
         id: '1',
@@ -65,19 +66,26 @@ const quizCategoriesList = [
 const QuizCategoriesScreen = ({ navigation }) => {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: Colors.whiteColor }}>
-            <StatusBar translucent={false} backgroundColor={Colors.primaryColor} />
+              {/* <LinearGradient
+       style={styles.container}
+       colors={["#08203e","#471069"]}
+       start={{x:0.1, y:0.3}}
+       end={{x:0.4,y:0.9}}
+       > */}
+            <StatusBar translucent={false} backgroundColor={Colors.whiteColor} />
             <View style={{ flex: 1 }}>
                 {header()}
                 {cateriesInfo()}
             </View>
+            {/* </LinearGradient> */}
         </SafeAreaView>
     )
 
     function cateriesInfo() {
         const renderItem = ({ item }) => (
             <TouchableOpacity
-                activeOpacity={0.5}
-                onPress={() => { navigation.push('JoinQuiz', { flowFor: 'one' }) }}
+                activeOpacity={0.9}
+                onPress={() => { navigation.push('CategoriesDifficulty', { flowFor: 'one' }) }}
                 style={styles.liveQuizSubjectsInfoWrapStyle}
             >
                 <View style={{ ...styles.liveQuizSubjectIconWrapStyle, }}>
@@ -87,10 +95,10 @@ const QuizCategoriesScreen = ({ navigation }) => {
                     />
                 </View>
                 <View style={{ flex: 1, marginLeft: Sizes.fixPadding + 5.0, }}>
-                    <Text numberOfLines={1} style={{ ...Fonts.blackColor18Bold }}>
+                    <Text numberOfLines={1} style={{ ...Fonts.purpleColor18Bold }}>
                         {item.subject}
                     </Text>
-                    <Text numberOfLines={1} style={{ ...Fonts.grayColor16SemiBold, marginTop: Sizes.fixPadding - 6.0 }}>
+                    <Text numberOfLines={1} style={{ ...Fonts.lightpurple16SemiBold, marginTop: Sizes.fixPadding - 6.0 }}>
                         {item.totalQuiz} Quiz
                     </Text>
                 </View>
@@ -110,6 +118,7 @@ const QuizCategoriesScreen = ({ navigation }) => {
     function header() {
         return (
             <Header
+                styles={{color:'08203e'}}
                 headerTitle={'Choose Categories'}
                 navigation={navigation}
             />
@@ -126,7 +135,7 @@ const styles = StyleSheet.create({
         width: 52.0,
         height: 50.0,
         borderRadius: Sizes.fixPadding - 5.0,
-        backgroundColor: Colors.whiteColor,
+        backgroundColor: "#08203e",
     },
     liveQuizSubjectsInfoWrapStyle: {
         flexDirection: 'row',

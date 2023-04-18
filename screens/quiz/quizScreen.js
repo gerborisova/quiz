@@ -189,54 +189,82 @@ const questionsList = [
 
 const QuizScreen = ({ navigation }) => {
 
-    const [second, setSecond] = useState(0);
-    const [minute, setMinute] = useState(0);
+    // const [second, setSecond] = useState(0);
+    // const [minute, setMinute] = useState(0);
     const [currentQuestionIndex, setcurrentQuestionIndex] = useState(0);
     const [questions, setquestions] = useState(questionsList);
 
-    useEffect(() => {
-        setTimeout(() => {
-            if (second == 59) {
-                setMinute(minute + 1)
-                setSecond(0);
-            }
-            else {
-                setSecond(second + 1)
-            }
-        }, 1000);
-        return () => {
-            clearTimeout()
-        }
-    }, [second]);
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         if (second == 59) {
+    //             setMinute(minute + 1)
+    //             setSecond(0);
+    //         }
+    //         else {
+    //             setSecond(second + 1)
+    //         }
+    //     }, 1000);
+    //     return () => {
+    //         clearTimeout()
+    //     }
+    // }, [second]);
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: Colors.whiteColor }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: Colors.primaryColor}}>
             <StatusBar translucent={false} backgroundColor={Colors.primaryColor} />
             <View style={{ flex: 1 }}>
                 {header()}
-                <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: Sizes.fixPadding * 2.0 }}>
+                <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{  paddingBottom: Sizes.fixPadding * 2.0 }}>
                     {questionWithOptions()}
+                    </ScrollView>
+                    <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexDirection:'row', width:'100%', justifyContent:'space-between', margin:0 }}>
+                    {currentQuestionIndex == 0 ? backInactive() : back()}
                     {nextButton()}
-                    {currentQuestionIndex == questions.length - 1 ? null : exitText()}
+
                 </ScrollView>
             </View>
         </SafeAreaView>
     )
 
-    function exitText() {
+    function back() {
         return (
-            <Text onPress={() => { navigation.navigate('Home') }} style={{ margin: Sizes.fixPadding * 2.0, textAlign: 'center', ...Fonts.primaryColor20Bold }}>
-                Exit
+            <Text onPress={() => { currentQuestionIndex == 0 ? navigation.push('QuizCategories') : setcurrentQuestionIndex(currentQuestionIndex - 1) }} style={{ margin: Sizes.fixPadding * 2.0, textAlign: 'center', ...Fonts.grayColor20ExtraBold }}>
+                Back
+            </Text>
+        )
+    }
+    function backInactive() {
+        return (
+            <Text>
+                
             </Text>
         )
     }
 
     function nextButton() {
         return (
-            <Button
+            <TouchableOpacity
                 onPress={() => { currentQuestionIndex == questions.length - 1 ? navigation.push('QuizResult') : setcurrentQuestionIndex(currentQuestionIndex + 1) }}
-                btnText={currentQuestionIndex == questions.length - 1 ? 'Finish' : 'Next'}
-                styles={{ marginTop: Sizes.fixPadding * 5.0, }}
+                style={{margin:0, paddingRight:0, display:'flex', margin: Sizes.fixPadding * 2.0, textAlign: 'center'}}
+                >
+                    {currentQuestionIndex == questions.length - 1 ?
+                    <Text style={{ ...Fonts.whiteColor20Bold }}>Finish</Text>
+                    :
+
+                    <Text style={{ ...Fonts.whiteColor20Bold }}>Next</Text>
+    }
+                </TouchableOpacity>
+        )
+    }
+
+    function closeIcon() {
+        return (
+            <MaterialIcons
+                name="close"
+                size={24}
+                color={Colors.whiteColor}
+                style={{ position: 'absolute', top: 20.0, left: 350.0, zIndex: 1 }}
+                onPress={() => { navigation.navigate('QuizCategories') }}
             />
         )
     }
@@ -284,7 +312,7 @@ const QuizScreen = ({ navigation }) => {
                 <Text style={{ ...Fonts.grayColor14Bold }}>
                     QUESTION {currentQuestionIndex + 1} OF {questionsList.length}
                 </Text>
-                <Text style={{ ...Fonts.blackColor20Bold, marginTop: Sizes.fixPadding - 2.0 }}>
+                <Text style={{ ...Fonts.whiteColor20Bold, marginTop: Sizes.fixPadding - 2.0 }}>
                     {questions[currentQuestionIndex].question}
                 </Text>
                 {
@@ -303,7 +331,7 @@ const QuizScreen = ({ navigation }) => {
                         >
                             <Text
                                 style={{
-                                    flex: 1, ...Fonts.grayColor16SemiBold,
+                                    flex: 1, ...Fonts.whiteColor16SemiBold,
                                     color: stylingSort({ item: item }) == Colors.extraLightPrimaryColor ? Colors.grayColor : stylingSort({ item: item })
                                 }}
                             >
@@ -337,13 +365,14 @@ const QuizScreen = ({ navigation }) => {
                     <Text style={{ flex: 1, ...Fonts.whiteColor22ExtraBold }}>
                         Question {currentQuestionIndex + 1}
                     </Text>
-                    <View style={styles.timeInfoWrapStyle}>
+                    {/* <View style={styles.timeInfoWrapStyle}>
                         <MaterialCommunityIcons name="alarm" size={20} color={Colors.whiteColor} />
                         <Text style={{ marginLeft: Sizes.fixPadding - 5.0, ...Fonts.whiteColor16SemiBold }}>
                             {minute.toString().length == 1 ? `0${minute}` : minute}:{second.toString().length == 1 ? `0${second}` : second}
                         </Text>
-                    </View>
+                    </View> */}
                 </View>
+                {closeIcon()}
                 <View style={{ flexDirection: 'row', marginBottom: Sizes.fixPadding, marginTop: Sizes.fixPadding * 2.0 }}>
                     <ScrollView
                         horizontal

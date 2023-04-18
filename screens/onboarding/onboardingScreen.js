@@ -84,7 +84,7 @@ const OnboardingScreen = ({ navigation }) => {
         return (
             <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => { currentScreen == 2 ? navigation.push('Login') : scrollToIndex({ index: currentScreen + 1 }) }}
+                onPress={() => { currentScreen == 2 ? navigation.push('QuizCategories') : scrollToIndex({ index: currentScreen + 1 }) }}
                 style={CommonStyles.buttonStyle}
             >
                 <Text style={{ ...Fonts.whiteColor20Bold }}>

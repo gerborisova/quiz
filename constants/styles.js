@@ -1,14 +1,17 @@
 import { Dimensions } from "react-native"
 
 export const Colors = {
-    primaryColor: '#6A5AE0',
+    primaryColor: '#F7D060',
+    buttonColor:'#ffffff',
     lightPrimaryColor: 'rgba(106, 90, 224, 0.1)',
-    extraLightPrimaryColor: 'rgba(106, 90, 224, 0.035)',
+    extraLightPrimaryColor: 'white',
     whiteColor: '#FFFFFF',
     offWhiteColor: 'rgba(255,255,255,0.5)',
     extraOffWhiteColor: 'rgba(255,255,255,0.3)',
+    purpleColor:'#08203e',
     blackColor: '#000000',
     grayColor: '#8A9CBF',
+    lightPurple:'#634975',
     lightGrayColor: 'rgba(138, 156, 191, 0.5)',
     redColor: '#FF0000',
     yellowColor: '#FDD835',
@@ -87,7 +90,11 @@ export const Fonts = {
         fontSize: 16.0,
         fontFamily: 'NunitoSans-SemiBold'
     },
-
+    lightpurple16SemiBold:{
+        color: Colors.lightPurple,
+        fontSize: 16.0,
+        fontFamily: 'NunitoSans-SemiBold'
+    },
     grayColor14Bold: {
         color: Colors.grayColor,
         fontSize: 14.0,
@@ -103,6 +110,11 @@ export const Fonts = {
     grayColor12ExtraBold: {
         color: Colors.grayColor,
         fontSize: 12.0,
+        fontFamily: 'NunitoSans-ExtraBold'
+    },
+    grayColor20ExtraBold: {
+        color: Colors.grayColor,
+        fontSize: 20.0,
         fontFamily: 'NunitoSans-ExtraBold'
     },
 
@@ -123,6 +135,16 @@ export const Fonts = {
         fontSize: 20.0,
         fontFamily: 'NunitoSans-Bold'
     },
+    purpleColor20Bold: {
+        color: Colors.purpleColor,
+        fontSize: 20.0,
+        fontFamily: 'NunitoSans-Bold'
+    },
+    purpleColor18Bold: {
+        color: Colors.purpleColor,
+        fontSize: 18.0,
+        fontFamily: 'NunitoSans-Bold'
+    },
 
     whiteColor19ExtraBold: {
         color: Colors.whiteColor,
@@ -132,6 +154,11 @@ export const Fonts = {
 
     whiteColor22ExtraBold: {
         color: Colors.whiteColor,
+        fontSize: 22.0,
+        fontFamily: 'NunitoSans-ExtraBold'
+    },
+   purpleColor22ExtraBold: {
+        color: Colors.purpleColor,
         fontSize: 22.0,
         fontFamily: 'NunitoSans-ExtraBold'
     },
@@ -258,6 +285,31 @@ export const Fonts = {
 }
 
 export const CommonStyles = {
+    nextButton:{
+        backgroundColor: Colors.buttonColor,
+        display:'flex',
+        // alignItems: 'center',
+        // justifyContent: 'center',
+        borderRadius: Sizes.fixPadding - 5.0,
+        width:'90%',
+        marginTop:'20%',
+        padding: '4%',
+        marginHorizontal: Sizes.fixPadding * 4.0,
+        elevation: 2.0,
+        shadowColor: Colors.primaryColor
+    },
+    initialButton: {
+        backgroundColor: '#2A2F4F',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: Sizes.fixPadding - 5.0,
+        width:'70%',
+        marginTop:'20%',
+        padding: '4%',
+        marginHorizontal: Sizes.fixPadding * 4.0,
+        elevation: 2.0,
+        shadowColor: Colors.primaryColor
+    },
     buttonStyle: {
         backgroundColor: Colors.primaryColor,
         alignItems: 'center',
@@ -271,7 +323,7 @@ export const CommonStyles = {
     headerStyle: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: Colors.primaryColor,
+        backgroundColor: Colors.whiteColor,
         paddingHorizontal: Sizes.fixPadding * 2.0,
         paddingVertical: Sizes.fixPadding * 3.0,
     },
