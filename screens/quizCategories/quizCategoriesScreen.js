@@ -1,83 +1,48 @@
 import { StyleSheet, Text, View, SafeAreaView, StatusBar, FlatList, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { Colors, Fonts, Sizes } from '../../constants/styles'
 import Header from '../../components/header'
 
-
-const quizCategoriesList = [
-    {
-        id: '1',
-        color: Colors.pinkColor,
-        icon: require('../../assets/images/icons/statistics.png'),
-        subject: 'Math and Statistics',
-        totalQuiz: 10,
-    },
-    {
-        id: '2',
-        color: Colors.tomatoColor,
-        icon: require('../../assets/images/icons/science.png'),
-        subject: 'Biology and Science',
-        totalQuiz: 12,
-    },
-    {
-        id: '3',
-        color: Colors.blueColor,
-        icon: require('../../assets/images/icons/music.png'),
-        subject: 'Art and Music',
-        totalQuiz: 9,
-    },
-    {
-        id: '4',
-        color: Colors.greenColor,
-        icon: require('../../assets/images/icons/math.png'),
-        subject: 'Integers',
-        totalQuiz: 10,
-    },
-    {
-        id: '5',
-        color: Colors.tomatoColor,
-        icon: require('../../assets/images/icons/sollar.png'),
-        subject: 'Solar System',
-        totalQuiz: 9,
-    },
-    {
-        id: '6',
-        color: Colors.pinkColor,
-        icon: require('../../assets/images/icons/technology.png'),
-        subject: 'Technology',
-        totalQuiz: 12,
-    },
-    {
-        id: '7',
-        color: Colors.blueColor,
-        icon: require('../../assets/images/icons/sport.png'),
-        subject: 'Sports',
-        totalQuiz: 9,
-    },
-    {
-        id: '8',
-        color: Colors.greenColor,
-        icon: require('../../assets/images/icons/networking.png'),
-        subject: 'Networking',
-        totalQuiz: 12,
-    },
-];
-
+    
 const QuizCategoriesScreen = ({ navigation }) => {
+
+    const [categories, setCategoriesList]= useState([]);
+
+    useEffect(() => {
+        fetch(`https://quiz-app-api.herokuapp.com/v1/categories`)
+        .then(response => response.json())
+         .then(response => setCategoriesList(response))
+             .catch (error => {
+                 console.error(error);
+               })     
+      }, []);
+
+      const imageGenerator=(category)=>{
+        switch (category) {
+            case 'General Knowledge':
+                return require('../../assets/images/icons/general.png');
+            case 'History':
+                return require('../../assets/images/icons/history.png');
+            case 'Geography':
+                return require('../../assets/images/icons/geography.png');
+            case 'Nature':
+                return require('../../assets/images/icons/nature.png');
+            case 'Art':
+                return require('../../assets/images/icons/art.png');
+
+            default:
+                return require('../../assets/images/icons/general.png');
+
+        }
+    }
+
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: Colors.whiteColor }}>
-              {/* <LinearGradient
-       style={styles.container}
-       colors={["#08203e","#471069"]}
-       start={{x:0.1, y:0.3}}
-       end={{x:0.4,y:0.9}}
-       > */}
-            <StatusBar translucent={false} backgroundColor={Colors.whiteColor} />
+        <SafeAreaView style={{ flex: 1, backgroundColor: Colors.primaryColor }}>
+            <StatusBar translucent={false} backgroundColor='black' />
             <View style={{ flex: 1 }}>
                 {header()}
                 {cateriesInfo()}
             </View>
-            {/* </LinearGradient> */}
         </SafeAreaView>
     )
 
@@ -85,28 +50,25 @@ const QuizCategoriesScreen = ({ navigation }) => {
         const renderItem = ({ item }) => (
             <TouchableOpacity
                 activeOpacity={0.9}
-                onPress={() => { navigation.push('CategoriesDifficulty', { flowFor: 'one' }) }}
+                onPress={() => { navigation.navigate('CategoriesDifficulty', { selectedTopic: item.name}) }}
                 style={styles.liveQuizSubjectsInfoWrapStyle}
-            >
+            > 
                 <View style={{ ...styles.liveQuizSubjectIconWrapStyle, }}>
                     <Image
-                        source={item.icon}
-                        style={{ tintColor: item.color, width: 36.0, height: 36.0, resizeMode: 'contain' }}
+                        source={imageGenerator(item.name)}
+                        style={{ width: 100.0, height: 70.0, resizeMode: 'contain' }}
                     />
                 </View>
                 <View style={{ flex: 1, marginLeft: Sizes.fixPadding + 5.0, }}>
-                    <Text numberOfLines={1} style={{ ...Fonts.purpleColor18Bold }}>
-                        {item.subject}
-                    </Text>
-                    <Text numberOfLines={1} style={{ ...Fonts.lightpurple16SemiBold, marginTop: Sizes.fixPadding - 6.0 }}>
-                        {item.totalQuiz} Quiz
+                    <Text numberOfLines={1} style={{ ...Fonts.whiteColor20Bold, marginLeft:10 }}>
+                        {item.name}
                     </Text>
                 </View>
             </TouchableOpacity>
         )
         return (
             <FlatList
-                data={quizCategoriesList}
+                data={categories}
                 keyExtractor={(item) => `${item.id}`}
                 renderItem={renderItem}
                 contentContainerStyle={{ paddingTop: Sizes.fixPadding * 2.0, }}
@@ -118,7 +80,7 @@ const QuizCategoriesScreen = ({ navigation }) => {
     function header() {
         return (
             <Header
-                styles={{color:'08203e'}}
+                styles={{backgroundColor:'#ffffff'}}
                 headerTitle={'Choose Categories'}
                 navigation={navigation}
             />
@@ -135,16 +97,26 @@ const styles = StyleSheet.create({
         width: 52.0,
         height: 50.0,
         borderRadius: Sizes.fixPadding - 5.0,
-        backgroundColor: "#08203e",
+        backgroundColor: Colors.primaryColor,
     },
     liveQuizSubjectsInfoWrapStyle: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: Colors.extraLightPrimaryColor,
+        backgroundColor: Colors.primaryColor,
         borderRadius: Sizes.fixPadding - 5.0,
         marginBottom: Sizes.fixPadding * 2.0,
         paddingHorizontal: Sizes.fixPadding + 5.0,
         paddingVertical: Sizes.fixPadding + 8.0,
         marginHorizontal: Sizes.fixPadding * 2.0,
-    }
+    },
+    bottomBanner: {
+        position: "absolute",
+        bottom: 0
+      },
+      container: {
+        flex: 1,
+        backgroundColor: "#fff",
+        alignItems: "center",
+        justifyContent: "center"
+      }
 })

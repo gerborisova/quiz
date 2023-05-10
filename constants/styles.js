@@ -1,7 +1,7 @@
 import { Dimensions } from "react-native"
 
 export const Colors = {
-    primaryColor: '#F7D060',
+    primaryColor: '#28235c',
     buttonColor:'#ffffff',
     lightPrimaryColor: 'rgba(106, 90, 224, 0.1)',
     extraLightPrimaryColor: 'white',
@@ -14,7 +14,7 @@ export const Colors = {
     lightPurple:'#634975',
     lightGrayColor: 'rgba(138, 156, 191, 0.5)',
     redColor: '#FF0000',
-    yellowColor: '#FDD835',
+    yellowColor: '#f3c402',
     pinkColor: '#F06292',
     tomatoColor: '#E57373',
     blueColor: '#64B5F6',
@@ -136,9 +136,9 @@ export const Fonts = {
         fontFamily: 'NunitoSans-Bold'
     },
     purpleColor20Bold: {
-        color: Colors.purpleColor,
+        color: Colors.primaryColor,
         fontSize: 20.0,
-        fontFamily: 'NunitoSans-Bold'
+        fontFamily: 'NunitoSans-ExtraBold'
     },
     purpleColor18Bold: {
         color: Colors.purpleColor,
@@ -162,8 +162,22 @@ export const Fonts = {
         fontSize: 22.0,
         fontFamily: 'NunitoSans-ExtraBold'
     },
-
-    whiteColor26ExtraBold: {
+    yellowColor22ExtraBold: {
+        color: Colors.yellowColor,
+        fontSize: 22.0,
+        fontFamily: 'NunitoSans-ExtraBold'
+    },
+    yellowColor18Bold: {
+        color: Colors.yellowColor,
+        fontSize: 18.0,
+        fontFamily: 'NunitoSans-Bold'
+    },
+    yellowColor20Bold: {
+        color: Colors.yellowColor,
+        fontSize: 20.0,
+        fontFamily: 'NunitoSans-Bold'
+    },
+    yellowColor26ExtraBold: {
         color: Colors.whiteColor,
         fontSize: 26.0,
         fontFamily: 'NunitoSans-ExtraBold'
@@ -299,10 +313,10 @@ export const CommonStyles = {
         shadowColor: Colors.primaryColor
     },
     initialButton: {
-        backgroundColor: '#2A2F4F',
+        backgroundColor: '#f3c402',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: Sizes.fixPadding - 5.0,
+        borderRadius: 100,
         width:'70%',
         marginTop:'20%',
         padding: '4%',
@@ -323,7 +337,7 @@ export const CommonStyles = {
     headerStyle: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: Colors.whiteColor,
+        backgroundColor: Colors.primaryColor,
         paddingHorizontal: Sizes.fixPadding * 2.0,
         paddingVertical: Sizes.fixPadding * 3.0,
     },

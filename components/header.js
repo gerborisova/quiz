@@ -9,10 +9,10 @@ const Header = ({ headerTitle, navigation }) => {
             <MaterialCommunityIcons
                 name="keyboard-backspace"
                 size={28}
-                color={Colors.purpleColor}
+                color={Colors.yellowColor}
                 onPress={() => { navigation.pop() }}
             />
-            <Text style={{ flex: 1, ...Fonts.purpleColor22ExtraBold, marginLeft: Sizes.fixPadding * 2.0 }}>
+            <Text style={{ flex: 1, ...Fonts.yellowColor22ExtraBold, marginLeft: Sizes.fixPadding * 2.0 }}>
                 {headerTitle}
             </Text>
         </View>

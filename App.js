@@ -27,13 +27,15 @@ import NotificationScreen from './screens/notification/notificationScreen';
 import ReferFriendScreen from './screens/referFriend/referFriendScreen';
 import FaqsScreen from './screens/faqs/faqsScreen';
 import ContactUsScreen from './screens/contactUs/contactUsScreen';
-import { LogBox } from 'react-native'
+import { LogBox } from 'react-native';
 
 LogBox.ignoreAllLogs();
 
 const Stack = createStackNavigator();
 
+
 function MyApp() {
+
   return (
     <NavigationContainer>
       <Stack.Navigator

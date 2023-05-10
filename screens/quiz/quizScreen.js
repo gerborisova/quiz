@@ -3,212 +3,41 @@ import React, { useEffect, useState } from 'react'
 import { Colors, Fonts, Sizes } from '../../constants/styles'
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import Button from '../../components/button';
-
-const questionsList = [
-    {
-        id: '1',
-        question: 'Which Economist divided Economics in two branches of micro and macro on the basis of economic activity?',
-        options: [
-            'Marshall',
-            'Ricardo',
-            'Ragnar Frish',
-            'None of these'
-        ],
-        correctAnswer: 'None of these',
-        userAnswer: '',
-    },
-    {
-        id: '2',
-        question: 'Which of the following is studied under Micro Economics?',
-        options: [
-            'Individual unit',
-            'Economic Aggregate',
-            'National Income',
-            'None of these'
-        ],
-        correctAnswer: 'None of these',
-        userAnswer: '',
-    },
-    {
-        id: '3',
-        question: '‘Micros’, which means ‘Small’ belongs to:',
-        options: [
-            'Arabian word',
-            'Greek word',
-            'German word',
-            'English worde'
-        ],
-        correctAnswer: 'Greek word',
-        userAnswer: '',
-    },
-    {
-        id: '4',
-        question: 'Which of the following statement is true?',
-        options: [
-            'Human wants are infinite',
-            'Resources are limited',
-            'Scarcity problem gives birth',
-            'All of these'
-        ],
-        correctAnswer: 'Scarcity problem gives birth',
-        userAnswer: '',
-    },
-    {
-        id: '5',
-        question: 'Which is a central problem of an economy?',
-        options: [
-            'Allocation of Resources',
-            'Optimum Utilisation of Resources',
-            'Economic Development',
-            'All of these'
-        ],
-        correctAnswer: 'All of these',
-        userAnswer: '',
-    },
-    {
-        id: '6',
-        question: 'Which of the following Is a type of economic activities?',
-        options: [
-            'Production',
-            'Consumption',
-            'Exchange and Investment',
-            'All of these'
-        ],
-        correctAnswer: 'All of these',
-        userAnswer: '',
-    },
-    {
-        id: '7',
-        question: 'To which factor, economic problem is basically related to:',
-        options: [
-            'Choice',
-            'Consumer’s Selection',
-            'Firm Selection',
-            'None of these'
-        ],
-        correctAnswer: 'Choice',
-        userAnswer: '',
-    },
-    {
-        id: '8',
-        question: 'Economy may be classified as:',
-        options: [
-            'Capitalist',
-            'Socialist',
-            'Mixed',
-            'All of these'
-        ],
-        correctAnswer: 'All of these',
-        userAnswer: '',
-    },
-    {
-        id: '9',
-        question: 'Which economy has a co-existence of private and public sectors?',
-        options: [
-            'Capitalist',
-            'Socialist',
-            'Mixed',
-            'All of these'
-        ],
-        correctAnswer: 'Mixed',
-        userAnswer: '',
-    },
-    {
-        id: '10',
-        question: 'A computer assisted method for the recording and analyzing of existing or hypothetical systems...',
-        options: [
-            'Data transmission',
-            'Data flow',
-            'Data capture',
-            'None of the above'
-        ],
-        correctAnswer: 'Data flow',
-        userAnswer: '',
-    },
-    {
-        id: '11',
-        question: 'Any type of storage that is used for holding information between steps in its processing is',
-        options: [
-            'CPU',
-            'Primary storage',
-            'Intermediate storage',
-            'Internal storage'
-        ],
-        correctAnswer: 'Intermediate storage',
-        userAnswer: '',
-    },
-    {
-        id: '12',
-        question: 'Production Possibility Curve is:',
-        options: [
-            'Concave to the axis',
-            'Convex to the axis',
-            'Parallel to the axis',
-            'Vertical to the axis'
-        ],
-        correctAnswer: 'Concave to the axis',
-        userAnswer: '',
-    },
-    {
-        id: '13',
-        question: 'Mention the name of the curve which shows economic problem:',
-        options: [
-            'Production Curve',
-            'Demand Curve',
-            'Indifference Curve',
-            'Production Possibility Curve'
-        ],
-        correctAnswer: 'Production Possibility Curve',
-        userAnswer: '',
-    },
-    {
-        id: '14',
-        question: 'Which of the following is studied under Macro Economics?',
-        options: [
-            'National Income',
-            'Full. Employment',
-            'Total Production',
-            'All of these'
-        ],
-        correctAnswer: 'All of these',
-        userAnswer: '',
-    },
-    {
-        id: '15',
-        question: 'A program component that allows structuring of a program in an unusual way is known as',
-        options: [
-            'Correlation',
-            'Coroutine',
-            'Diagonalization',
-            'Quene'
-        ],
-        correctAnswer: 'Correlation',
-        userAnswer: '',
-    },
-];
-
-const QuizScreen = ({ navigation }) => {
-
-    // const [second, setSecond] = useState(0);
-    // const [minute, setMinute] = useState(0);
-    const [currentQuestionIndex, setcurrentQuestionIndex] = useState(0);
-    const [questions, setquestions] = useState(questionsList);
-
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         if (second == 59) {
-    //             setMinute(minute + 1)
-    //             setSecond(0);
-    //         }
-    //         else {
-    //             setSecond(second + 1)
-    //         }
-    //     }, 1000);
-    //     return () => {
-    //         clearTimeout()
-    //     }
-    // }, [second]);
-
+  
+const QuizScreen = ({ navigation,route }) => {
+const {difficulty}= route.params;
+const {selectedTopic}= route.params;
+const [questionsList, setQuestionsList]=useState([]);
+const [userAnswer, setUserAnswer]=useState('')
+const [userAnswers, setUserAnswers]=useState([])
+const [disabled,setDisabled]= useState();
+const [correct,setCorrect]=useState('');
+const [currentQuestionIndex, setcurrentQuestionIndex] = useState(0);
+const [numberOfCorrect,setNumberOfCorrect]=useState(0);
+const [displayNextButton, setDisplayNextButton]= useState('none');
+ 
+    useEffect(() => {
+    setDisabled(false);
+    setUserAnswer('');
+       fetch(`https://quiz-app-api.herokuapp.com/v1/questions?categoryId=${selectedTopic.toLowerCase()}&difficulty=${difficulty.toLowerCase()}&size=10`)
+       .then(response => response.json())
+        .then(response => setQuestionsList(response))
+            .catch (error => {
+                console.error(error);
+              })     
+     }, []);
+   
+    useEffect(() => {
+        setDisabled(false);
+        setDisplayNextButton('none');
+     }, [currentQuestionIndex]);
+     
+     const validateAnswer=(()=>{
+         if(userAnswer!='' && userAnswer === correct){
+             console.log('here');
+            setNumberOfCorrect(numberOfCorrect+1);
+         }
+     })
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: Colors.primaryColor}}>
             <StatusBar translucent={false} backgroundColor={Colors.primaryColor} />
@@ -220,7 +49,6 @@ const QuizScreen = ({ navigation }) => {
                     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexDirection:'row', width:'100%', justifyContent:'space-between', margin:0 }}>
                     {currentQuestionIndex == 0 ? backInactive() : back()}
                     {nextButton()}
-
                 </ScrollView>
             </View>
         </SafeAreaView>
@@ -244,14 +72,16 @@ const QuizScreen = ({ navigation }) => {
     function nextButton() {
         return (
             <TouchableOpacity
-                onPress={() => { currentQuestionIndex == questions.length - 1 ? navigation.push('QuizResult') : setcurrentQuestionIndex(currentQuestionIndex + 1) }}
+                onPress={() => {                        validateAnswer();
+                    currentQuestionIndex == questionsList.length - 1 ? setTimeout(() => {
+                        navigation.navigate('QuizResult', {correct:numberOfCorrect,all:questionsList.length})},2000) : setcurrentQuestionIndex(currentQuestionIndex + 1) }}
                 style={{margin:0, paddingRight:0, display:'flex', margin: Sizes.fixPadding * 2.0, textAlign: 'center'}}
                 >
-                    {currentQuestionIndex == questions.length - 1 ?
-                    <Text style={{ ...Fonts.whiteColor20Bold }}>Finish</Text>
+                    {currentQuestionIndex == questionsList.length - 1 ?
+                    <Text style={{ ...Fonts.whiteColor20Bold }}>Finish</Text>  
                     :
 
-                    <Text style={{ ...Fonts.whiteColor20Bold }}>Next</Text>
+                    <Text style={{ ...Fonts.whiteColor20Bold, display:displayNextButton }}>Next</Text>
     }
                 </TouchableOpacity>
         )
@@ -269,35 +99,22 @@ const QuizScreen = ({ navigation }) => {
         )
     }
 
-    function updateQuestions({ id, userAnswer }) {
-        const copyQuestions = questions;
-        const newQuestions = copyQuestions.map((item) => {
-            if (item.id == id) {
-                return { ...item, userAnswer: userAnswer }
-            }
-            else {
-                return item
-            }
-        });
-        setquestions(newQuestions);
-    }
-
-    function stylingSort({ item }) {
-        return questions[currentQuestionIndex].userAnswer
+    function stylingSort(item) {
+        return (userAnswer !='')
             ?
-            (questions[currentQuestionIndex].userAnswer == questions[currentQuestionIndex].correctAnswer)
+            (userAnswer === correct)
                 ?
-                questions[currentQuestionIndex].userAnswer == item
+                userAnswer == item.text
                     ?
                     Colors.hightLightGreenColor
                     :
                     Colors.extraLightPrimaryColor
                 :
-                questions[currentQuestionIndex].userAnswer == item
+                userAnswer == item.text
                     ?
                     Colors.redColor
                     :
-                    questions[currentQuestionIndex].correctAnswer == item
+                    correct == item.text
                         ?
                         Colors.hightLightGreenColor
                         :
@@ -312,48 +129,50 @@ const QuizScreen = ({ navigation }) => {
                 <Text style={{ ...Fonts.grayColor14Bold }}>
                     QUESTION {currentQuestionIndex + 1} OF {questionsList.length}
                 </Text>
-                <Text style={{ ...Fonts.whiteColor20Bold, marginTop: Sizes.fixPadding - 2.0 }}>
-                    {questions[currentQuestionIndex].question}
+                <Text style={{ ...Fonts.whiteColor18Bold, marginTop: Sizes.fixPadding - 2.0 }}>
+                    {questionsList[currentQuestionIndex] ? questionsList[currentQuestionIndex].q : 'text'}
                 </Text>
-                {
-                    questions[currentQuestionIndex].options.map((item, index) => (
-                        <TouchableOpacity
-                            activeOpacity={0.5}
-                            onPress={() => {
-                                questions[currentQuestionIndex].userAnswer
-                                    ?
+                { questionsList[currentQuestionIndex] ? 
+                questionsList[currentQuestionIndex].answers.map((item,index) => (
+                            <TouchableOpacity
+                            disabled={disabled}
+                    activeOpacity={0.5}
+                    key={`${index}`}
+                    onPress={() => {
+                        setUserAnswer(item.text);
+                        setCorrect(questionsList[currentQuestionIndex].correctAnswer)
+                        setUserAnswers([...userAnswers, item.text]);
+                        setDisabled(true);
+                        setDisplayNextButton('flex');
+
+                    }}
+                    style={{ ...styles.optionWrapStyle, borderColor: stylingSort(item) }}
+                >
+                    
+                    <Text
+                        style={{
+                            flex: 1, ...Fonts.whiteColor16SemiBold,
+                            color: stylingSort(item) == Colors.extraLightPrimaryColor ? Colors.grayColor : stylingSort(item)
+                        }}
+                    >
+                    {item.text}
+                    </Text>
+                    {
+                                stylingSort(item) == Colors.extraLightPrimaryColor ?
                                     null
                                     :
-                                    updateQuestions({ id: questions[currentQuestionIndex].id, userAnswer: item })
-                            }}
-                            key={`${index}`}
-                            style={{ ...styles.optionWrapStyle, borderColor: stylingSort({ item: item }), }}
-                        >
-                            <Text
-                                style={{
-                                    flex: 1, ...Fonts.whiteColor16SemiBold,
-                                    color: stylingSort({ item: item }) == Colors.extraLightPrimaryColor ? Colors.grayColor : stylingSort({ item: item })
-                                }}
-                            >
-                                {item}
-                            </Text>
-                            {
-                                stylingSort({ item: item }) == Colors.extraLightPrimaryColor ?
-                                    null
-                                    :
-                                    <View style={{ ...styles.correctWrongIndicatorStyle, borderColor: stylingSort({ item: item }), }}>
+                                    <View style={{ ...styles.correctWrongIndicatorStyle, borderColor: stylingSort(item), }}>
                                         {
-                                            stylingSort({ item: item }) == Colors.hightLightGreenColor
+                                            stylingSort(item) == Colors.hightLightGreenColor
                                                 ?
-                                                <MaterialIcons name="done" size={15} color={stylingSort({ item: item })} />
+                                                <MaterialIcons name="done" size={15} color={stylingSort(item)} />
                                                 :
-                                                <MaterialIcons name="close" size={15} color={stylingSort({ item: item })} />
+                                                <MaterialIcons name="close" size={15} color={stylingSort(item)} />
                                         }
                                     </View>
                             }
-                        </TouchableOpacity>
-                    ))
-                }
+                    </TouchableOpacity>
+                )) : null }
             </View>
         )
     }
@@ -362,7 +181,7 @@ const QuizScreen = ({ navigation }) => {
         return (
             <View style={{ backgroundColor: Colors.primaryColor, padding: Sizes.fixPadding * 2.0, }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <Text style={{ flex: 1, ...Fonts.whiteColor22ExtraBold }}>
+                    <Text style={{ flex: 1, ...Fonts.yellowColor22ExtraBold }}>
                         Question {currentQuestionIndex + 1}
                     </Text>
                     {/* <View style={styles.timeInfoWrapStyle}>
@@ -380,27 +199,28 @@ const QuizScreen = ({ navigation }) => {
                         contentContainerStyle={{ flexGrow: 1 }}
                     >
                         {
-                            questions.map((item, index) => (
+                            questionsList.map((item, index) => (
                                 <View
-                                    key={`${item.id}`}
-                                    style={{
-                                        backgroundColor: currentQuestionIndex == index
+                                    key={`${item._id}`}
+                                    style={{backgroundColor:
+                                        currentQuestionIndex == index
+                                        ?
+                                        Colors.whiteColor
+                                        :
+                                        userAnswers[index]
                                             ?
-                                            Colors.whiteColor
-                                            :
-                                            item.userAnswer
+                                            userAnswers[index]
+                                            == questionsList[index].correctAnswer
                                                 ?
-                                                item.userAnswer == item.correctAnswer
-                                                    ?
-                                                    Colors.hightLightGreenColor
-                                                    :
-                                                    Colors.redColor
+                                                Colors.hightLightGreenColor
                                                 :
-                                                currentQuestionIndex > index
-                                                    ?
-                                                    Colors.redColor
-                                                    :
-                                                    Colors.extraOffWhiteColor,
+                                                Colors.redColor
+                                            :
+                                            currentQuestionIndex > index
+                                                ?
+                                                Colors.redColor
+                                                :
+                                                Colors.extraOffWhiteColor,
                                         marginHorizontal: Sizes.fixPadding - 8.5,
                                         height: 5.0,
                                         borderRadius: Sizes.fixPadding - 8.0,

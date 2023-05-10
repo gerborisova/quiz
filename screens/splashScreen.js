@@ -2,8 +2,6 @@ import { View, SafeAreaView, StatusBar, Image, BackHandler, TouchableOpacity,Tex
 import React, { useCallback } from 'react'
 import { Colors, CommonStyles,Fonts } from '../constants/styles'
 import { useFocusEffect } from '@react-navigation/native'
-import { LinearGradient } from 'expo-linear-gradient';
-
 
 const SplashScreen = ({ navigation }) => {
 
@@ -21,31 +19,26 @@ const SplashScreen = ({ navigation }) => {
 
 
     return (
-       <LinearGradient
-       style={styles.container}
-       colors={["#FF6D60","#F7D060"]}
-       start={{x:0.1, y:0.3}}
-       end={{x:0.4,y:0.9}}
-       >
-        {/* <SafeAreaView style={{ flex: 1, backgroundImage: `linear-gradient(to bottom, #ffffff} 0%, #000000 100%)`}}> */}
+     
+     <SafeAreaView style={{ flex: 1, backgroundColor: '#28235c'}}>
             <StatusBar translucent={false} backgroundColor={Colors.primaryColor} />
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <Image
                     source={require('../assets/images/appLogo.png')}
-                    style={{ width: '100%', height: 50.0, resizeMode: 'contain' }}
+                    style={{ width: '100%', height: 400.0, resizeMode: 'contain' }}
                 />
                   <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={() => { navigation.push('QuizCategories') }}
                 style={CommonStyles.initialButton}
             >
-                <Text style={{ ...Fonts.whiteColor20Bold }}>
+                <Text style={{ ...Fonts.purpleColor20Bold }}>
                  GET STARTED
                 </Text>
             </TouchableOpacity>
+
             </View>
-        {/* </SafeAreaView> */}
-        </LinearGradient>
+    </SafeAreaView>
     )
 }
 

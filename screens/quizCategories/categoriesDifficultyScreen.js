@@ -1,33 +1,18 @@
 import { StyleSheet, Text, View, SafeAreaView, StatusBar, FlatList, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import { Colors, Fonts, Sizes } from '../../constants/styles'
 import Header from '../../components/header'
 
-const difficultyList = [
-    {
-        id: '1',
-        color: Colors.pinkColor,
-        icon: require('../../assets/images/icons/statistics.png'),
-        subject: 'Easy',
-        totalQuiz: 10,
-    },
-    {
-        id: '2',
-        color: Colors.tomatoColor,
-        icon: require('../../assets/images/icons/science.png'),
-        subject: 'Intermediate',
-        totalQuiz: 12,
-    },
-    {
-        id: '3',
-        color: Colors.blueColor,
-        icon: require('../../assets/images/icons/music.png'),
-        subject: 'Hard',
-        totalQuiz: 9,
-    }
-];
 
-const CategoriesDifficultyScreen = ({ navigation }) => {
+const CategoriesDifficultyScreen = ({ navigation, route }) => {
+
+    const {selectedTopic}= route.params;
+   
+
+const navigate=(item)=>{
+    console.log(item);
+    navigation.navigate('Quiz', {difficulty:item.subject, selectedTopic:selectedTopic});
+}
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: Colors.primaryColor }}>
             <StatusBar translucent={false} backgroundColor={Colors.primaryColor} />
@@ -39,24 +24,39 @@ const CategoriesDifficultyScreen = ({ navigation }) => {
     )
 
     function cateriesInfo() {
+        
+        const difficultyList = [{
+            id:1,
+            subject: 'Easy',
+            icon: require('../../assets/images/icons/music.png'),
+        },
+            {
+                id:2,
+                subject: 'Moderate',
+                icon: require('../../assets/images/icons/music.png'),
+            },
+                {
+                    id:3,
+                    subject: 'Hard',
+                    icon: require('../../assets/images/icons/music.png'),
+                }];
+       
+
         const renderItem = ({ item }) => (
             <TouchableOpacity
                 activeOpacity={0.5}
-                onPress={() => { navigation.push('Quiz', { flowFor: 'one' }) }}
+                onPress={() => { navigate(item) }}
                 style={styles.liveQuizSubjectsInfoWrapStyle}
             >
-                <View style={{ ...styles.liveQuizSubjectIconWrapStyle, }}>
-                    <Image
+                {/* <View style={{ ...styles.liveQuizSubjectIconWrapStyle, }}>
+                    <Image 
                         source={item.icon}
                         style={{ tintColor: item.color, width: 36.0, height: 36.0, resizeMode: 'contain' }}
-                    />
-                </View>
+                    /> 
+                </View> */}
                 <View style={{ flex: 1, marginLeft: Sizes.fixPadding + 5.0, }}>
-                    <Text numberOfLines={1} style={{ ...Fonts.whiteColor18Bold }}>
+                    <Text numberOfLines={1} style={{ ...Fonts.whiteColor20Bold }}>
                         {item.subject}
-                    </Text>
-                    <Text numberOfLines={1} style={{ ...Fonts.grayColor16SemiBold, marginTop: Sizes.fixPadding - 6.0 }}>
-                        {item.totalQuiz} Quiz
                     </Text>
                 </View>
             </TouchableOpacity>
@@ -91,12 +91,12 @@ const styles = StyleSheet.create({
         width: 52.0,
         height: 50.0,
         borderRadius: Sizes.fixPadding - 5.0,
-        backgroundColor: Colors.whiteColor,
+        backgroundColor: Colors.primaryColor,
     },
     liveQuizSubjectsInfoWrapStyle: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: Colors.extraLightPrimaryColor,
+        backgroundColor: Colors.primaryColor,
         borderRadius: Sizes.fixPadding - 5.0,
         marginBottom: Sizes.fixPadding * 2.0,
         paddingHorizontal: Sizes.fixPadding + 5.0,

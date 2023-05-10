@@ -5,13 +5,16 @@ import { MaterialIcons } from '@expo/vector-icons'
 import Button from '../../components/button'
 import { useFocusEffect } from '@react-navigation/native'
 
-const QuizResultScreen = ({ navigation }) => {
+const QuizResultScreen = ({ navigation,route }) => {
 
+    const {correct, all}=route.params;
+    const incorrect = all-correct;
     const backAction = () => {
         navigation.navigate('Home');
         return true;
     }
 
+    console.log(all,correct);
     useFocusEffect(
         useCallback(() => {
             BackHandler.addEventListener("hardwareBackPress", backAction);
@@ -48,7 +51,7 @@ const QuizResultScreen = ({ navigation }) => {
                 <View style={{ marginHorizontal: Sizes.fixPadding * 2.0, flexDirection: 'row', alignItems: 'center' }}>
                     <View style={{ ...styles.scroreBoxStyle, backgroundColor: Colors.grayColor }}>
                         <Text style={{ ...Fonts.whiteColor22ExtraBold }}>
-                            15
+                            {all}
                         </Text>
                         <Text numberOfLines={1} style={{ ...Fonts.whiteColor16SemiBold }}>
                             Question
@@ -56,7 +59,7 @@ const QuizResultScreen = ({ navigation }) => {
                     </View>
                     <View style={{ ...styles.scroreBoxStyle, backgroundColor: Colors.hightLightGreenColor }}>
                         <Text style={{ ...Fonts.whiteColor22ExtraBold }}>
-                            13
+                            {correct}
                         </Text>
                         <Text numberOfLines={1} style={{ ...Fonts.whiteColor16SemiBold }}>
                             Correct
@@ -64,7 +67,7 @@ const QuizResultScreen = ({ navigation }) => {
                     </View>
                     <View style={{ ...styles.scroreBoxStyle, backgroundColor: Colors.redColor }}>
                         <Text style={{ ...Fonts.whiteColor22ExtraBold }}>
-                            02
+                            {incorrect}
                         </Text>
                         <Text numberOfLines={1} style={{ ...Fonts.whiteColor16SemiBold }}>
                             Incorrect
@@ -93,7 +96,7 @@ const QuizResultScreen = ({ navigation }) => {
                 size={24}
                 color={Colors.whiteColor}
                 style={{ position: 'absolute', top: 20.0, left: 20.0, zIndex: 1 }}
-                onPress={() => { navigation.navigate('Quiz') }}
+                onPress={() => { navigation.navigate('QuizCategories') }}
             />
         )
     }
